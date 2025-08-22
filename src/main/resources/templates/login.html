@@ -3,55 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            width: 250px;
-        }
-        input, button {
-            padding: 8px;
-            font-size: 14px;
-        }
-        .register-link {
-            margin-top: 20px;
-            font-size: 14px;
-        }
-        .error {
-            color: red;
-            margin-bottom: 10px;
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Asar&family=Bona+Nova+SC:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <script src="/script/script.js" defer></script>
+
 </head>
 <body>
-
-<h2>Login</h2>
-
-<form th:action="@{/login}" method="post" th:object="${user}">
-    <div th:if="${error}" class="error" th:text="${error}"></div>
-
-    <label>Username</label>
-    <input type="text" th:field="*{name}" required/>
-
-    <label>Password</label>
-    <input type="password" th:field="*{rawPassword}" required/>
-
-    <button type="submit">Logga in</button>
-</form>
-
-<div class="register-link">
-    Har du ingen användare? <a th:href="@{/register}">Registrera dig</a>
+<div class="notification-popup error" th:if="${error}">
+    <span th:text="${error}"></span>
+    <button class="close-notification">×</button>
 </div>
-
+<div class="notification-popup success" th:if="${success}">
+    <span th:text="${success}"></span>
+    <button class="close-notification">×</button>
+</div>
+<div class="start-page">
+    <div class="background-container">
+        <div class="login-container">
+            <form action="/login" method="post">
+                <input type="text" name="email" placeholder="Email" />
+                <input type="password" name="rawPassword" placeholder="Lösenord" />
+                <button type="submit">Logga in</button>
+            </form>
+            <form action="/register" method="get" class="goto-register">
+                <div>
+                    <span>Har du inget konto?</span>
+                    <button type="submit">Skapa konto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>
