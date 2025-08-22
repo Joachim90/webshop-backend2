@@ -38,4 +38,24 @@ public class UserController {
             return "register";
         }
     }
+
+    @GetMapping("/login")
+    public String showLoginForm() {
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String loginUser(@ModelAttribute LoginRequest loginRequest, RedirectAttributes redirectAttributes, HttpSession session) {
+        ResponseEntity<?> response = userService.login(loginRequest);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            UserDto user = new UserDto(loginRequest.name(), null);
+            session.setAttribute("user", user);
+            redirectAttributes.addFlashAttribute("success", "Välkommen " + user.name() + "!");
+            return "redirect:/start";
+        }
+
+        redirectAttributes.addFlashAttribute("error", "Fel användarnamn eller lösenord");
+        return "redirect:/login";
+    }
 }
