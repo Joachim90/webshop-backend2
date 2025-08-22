@@ -20,7 +20,7 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    @Scheduled(fixedRate = 5 * 60 * 1000) // [minuter * sekunder * millisekund] Hämtar från API var 5e minut
+    @Scheduled(fixedRate = 5 * 60 * 1000) // Hämtar från API var 5e minut [minuter * sekunder * millisekunder]
     public void fetchProducts() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         URL url = new URL("https://fakestoreapi.com/products");

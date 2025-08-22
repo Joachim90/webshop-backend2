@@ -27,7 +27,7 @@ public class UserController {
         return "register";
     }
 
-    @PostMapping
+    @PostMapping("/register")
     public String register(@ModelAttribute RegisterRequest registerRequest, RedirectAttributes redirectAttributes, Model model) {
         final var result = userService.register(registerRequest);
         if (result.equals(ResponseEntity.ok().build())) {

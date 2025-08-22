@@ -7,4 +7,18 @@ public record RegisterRequest(
         String rawPassword,
         List<String> requestedRoles
 ) {
+    @Override
+    public String rawPassword() {
+        return rawPassword;
+    }
+
+    @Override
+    public String name() {
+        return name;
+    }
+
+    @Override
+    public List<String> requestedRoles() {
+        return requestedRoles;
+    }
 }
