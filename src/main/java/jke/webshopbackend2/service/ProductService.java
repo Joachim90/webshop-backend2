@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class ProductService {
@@ -35,4 +36,9 @@ public class ProductService {
         }
 
     }
+
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
+
 }

@@ -1,23 +1,32 @@
 package jke.webshopbackend2.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+
 
 @Entity
 public class CustomerOrder {
+    public CustomerOrder(User customer, Product product) {
+        this.customer = customer;
+        this.product = product;
+    }
 
     @Id
     @GeneratedValue
     public int id;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User customer;
-    public LocalDateTime orderDateTime;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    public CustomerOrder() {
+
+    }
 
     public int getId() {
         return id;
@@ -35,11 +44,12 @@ public class CustomerOrder {
         this.customer = customer;
     }
 
-    public LocalDateTime getOrderDateTime() {
-        return orderDateTime;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setOrderDateTime(LocalDateTime orderDateTime) {
-        this.orderDateTime = orderDateTime;
+    public void setProduct(Product product) {
+        this.product = product;
     }
+
 }

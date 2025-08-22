@@ -76,6 +76,8 @@ public class Product {
 @Embeddable
 class Rating {
     public double rate;
+    public int count;
+
 
     public double getRate() {
         return rate;
@@ -92,8 +94,6 @@ class Rating {
     public void setCount(int count) {
         this.count = count;
     }
-
-    public int count;
 }
 
 
