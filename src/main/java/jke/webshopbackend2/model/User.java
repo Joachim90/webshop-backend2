@@ -16,6 +16,8 @@ public class User {
     private String passwordHash;
     private String role;
 
+    public User() {}
+
     public User(String name, String encode, String role) {
         this.username = name;
         this.passwordHash = encode;

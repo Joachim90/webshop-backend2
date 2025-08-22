@@ -1,4 +1,5 @@
 package jke.webshopbackend2.dto;
 
-public class UserDto {
+public record UserDto(String name, String role) {
+
 }
