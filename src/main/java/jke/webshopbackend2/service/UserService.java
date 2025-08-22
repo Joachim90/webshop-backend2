@@ -2,6 +2,7 @@ package jke.webshopbackend2.service;
 
 import jke.webshopbackend2.dto.LoginRequest;
 import jke.webshopbackend2.dto.RegisterRequest;
+import jke.webshopbackend2.dto.UserDto;
 import jke.webshopbackend2.model.User;
 import jke.webshopbackend2.repository.UserRepository;
 import org.springframework.http.HttpStatus;

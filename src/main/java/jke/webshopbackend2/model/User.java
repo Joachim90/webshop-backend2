@@ -10,14 +10,16 @@ import java.util.List;
 @Entity
 public class User {
 
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String username;
     private String passwordHash;
-    private List<String> roles;
+    private String role;
 
-    public User(String name, String encode, List<String> roles) {
+
+    public User(String name, String encode, String role) {
         this.username = name;
         this.passwordHash = encode;
         this.roles = roles;
