@@ -5,8 +5,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-import java.util.List;
-
 @Entity
 public class User {
 
@@ -18,15 +16,10 @@ public class User {
     private String passwordHash;
     private String role;
 
-
     public User(String name, String encode, String role) {
         this.username = name;
         this.passwordHash = encode;
-        this.roles = roles;
-    }
-
-    public User() {
-
+        this.role = role;
     }
 
     public Long getId() {
@@ -41,8 +34,8 @@ public class User {
         return passwordHash;
     }
 
-    public List<String> getRoles() {
-        return roles;
+    public String getRole() {
+        return role;
     }
 
 }
