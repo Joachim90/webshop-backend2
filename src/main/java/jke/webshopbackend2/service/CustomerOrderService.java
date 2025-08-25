@@ -24,16 +24,15 @@ public class CustomerOrderService {
         return customerOrderRepository.findAll();
     }
 
-    public String purchaseProduct(Integer productId, User user) {
+    public boolean purchaseProduct(Integer productId, User user) {
         Product product = productRepository.findById(productId).orElse(null);
 
         if (product != null) {
-            CustomerOrder customerOrder = new CustomerOrder(user, product);
-            customerOrderRepository.save(customerOrder);
-            return "success";
+            customerOrderRepository.save(new CustomerOrder(user, product));
+            return true;
         }
 
-        return "fail";
+        return false;
     }
 
     public String deleteOrder(int customerOrderId){
