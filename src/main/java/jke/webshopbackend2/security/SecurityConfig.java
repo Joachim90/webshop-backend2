@@ -23,16 +23,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/register", "/login", "/home").permitAll()
+                        .requestMatchers("/register", "/login", "/home", "/purchase", "/purchase/**").permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
                         //.requestMatchers("/home").hasAnyRole()
                         .anyRequest().authenticated()
                 )
                 .formLogin(AbstractHttpConfigurer::disable)
                 .logout(LogoutConfigurer::permitAll)
-                .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/login", "/register","/home")
-                );
+                .csrf(AbstractHttpConfigurer::disable);
 
         return http.build();
     }

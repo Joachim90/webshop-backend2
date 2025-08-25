@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpSession;
 import jke.webshopbackend2.dto.LoginRequest;
 import jke.webshopbackend2.dto.RegisterRequest;
 import jke.webshopbackend2.dto.UserDto;
+import jke.webshopbackend2.model.User;
 import jke.webshopbackend2.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -50,10 +51,9 @@ public class UserController {
         ResponseEntity<?> response = userService.login(loginRequest);
         System.out.println("response: " + response);
         if (response.getStatusCode().is2xxSuccessful()) {
-            UserDto user = new UserDto(loginRequest.username(), userService.findUserByUsername(loginRequest.username()).getRoles().stream().toList());
-            session.setAttribute("user", user);
-            redirectAttributes.addFlashAttribute("success", "Välkommen " + user.username() + "!");
-            System.out.println("hej!");
+            session.setAttribute("user", response.getBody());
+            redirectAttributes.addFlashAttribute("success", "Välkommen "+response.getBody() + "!");
+            System.out.println("hej! du är inloggad");
             return "redirect:/home";
         }
 

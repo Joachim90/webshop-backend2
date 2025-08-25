@@ -39,7 +39,7 @@ public class UserService {
     public ResponseEntity<?> login(LoginRequest loginRequest) {
         final var user = userRepository.findByUsername(loginRequest.username());
         if (user.isPresent() && passwordEncoder.matches(loginRequest.rawPassword(), user.get().getPasswordHash())) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().body(user.get());
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
