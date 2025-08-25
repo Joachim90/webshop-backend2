@@ -22,7 +22,7 @@ public class UserService {
 
     public ResponseEntity<?> register(RegisterRequest registerRequest) {
 
-        final var user = userRepository.findByUsername(registerRequest.name());
+        final var user = userRepository.findByUsername(registerRequest.username());
 
         if (user.isEmpty()) {
             return new ResponseEntity<>("Username is already in use", HttpStatus.BAD_REQUEST);
@@ -30,7 +30,7 @@ public class UserService {
 
         return ResponseEntity.ok().body(userRepository.save(
                 userRepository.save(new User(
-                        registerRequest.name(),
+                        registerRequest.username(),
                         passwordEncoder.encode(registerRequest.rawPassword()),
                         registerRequest.requestedRoles()
                 ))
@@ -38,7 +38,7 @@ public class UserService {
     }
 
     public ResponseEntity<?> login(LoginRequest loginRequest) {
-        final var user = userRepository.findByUsername(loginRequest.name());
+        final var user = userRepository.findByUsername(loginRequest.username());
         if (user.isPresent() && passwordEncoder.matches(loginRequest.rawPassword(), user.get().getPasswordHash())) {
             return ResponseEntity.ok().build();
         } else {

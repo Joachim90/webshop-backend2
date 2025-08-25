@@ -1,6 +1,9 @@
 package jke.webshopbackend2.controller;
 
+import jakarta.servlet.http.HttpSession;
+import jke.webshopbackend2.dto.LoginRequest;
 import jke.webshopbackend2.dto.RegisterRequest;
+import jke.webshopbackend2.dto.UserDto;
 import jke.webshopbackend2.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
