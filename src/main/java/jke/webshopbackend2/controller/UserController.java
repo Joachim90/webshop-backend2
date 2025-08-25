@@ -48,12 +48,13 @@ public class UserController {
     @PostMapping("/login")
     public String loginUser(@ModelAttribute LoginRequest loginRequest, RedirectAttributes redirectAttributes, HttpSession session) {
         ResponseEntity<?> response = userService.login(loginRequest);
-
+        System.out.println("response: " + response);
         if (response.getStatusCode().is2xxSuccessful()) {
             UserDto user = new UserDto(loginRequest.username(), userService.findUserByUsername(loginRequest.username()).getRoles().stream().toList());
             session.setAttribute("user", user);
             redirectAttributes.addFlashAttribute("success", "Välkommen " + user.username() + "!");
-            return "redirect:/start";
+            System.out.println("hej!");
+            return "home";
         }
 
         redirectAttributes.addFlashAttribute("error", "Fel användarnamn eller lösenord");
