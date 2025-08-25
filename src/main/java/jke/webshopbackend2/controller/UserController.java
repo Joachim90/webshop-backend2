@@ -46,7 +46,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String loginUser(@ModelAttribute LoginRequest loginRequest, RedirectAttributes redirectAttributes, HttpSession session) {
+    public String loginUser(@ModelAttribute LoginRequest loginRequest, RedirectAttributes redirectAttributes, HttpSession session, Model model) {
         ResponseEntity<?> response = userService.login(loginRequest);
         System.out.println("response: " + response);
         if (response.getStatusCode().is2xxSuccessful()) {
@@ -54,10 +54,10 @@ public class UserController {
             session.setAttribute("user", user);
             redirectAttributes.addFlashAttribute("success", "Välkommen " + user.username() + "!");
             System.out.println("hej!");
-            return "home";
+            return "redirect:/home";
         }
 
-        redirectAttributes.addFlashAttribute("error", "Fel användarnamn eller lösenord");
-        return "redirect:/login";
+        model.addAttribute("error", "Fel användarnamn eller lösenord");
+        return "login";
     }
 }

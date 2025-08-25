@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .logout(LogoutConfigurer::permitAll)
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/login", "/register")
+                        .ignoringRequestMatchers("/login", "/register","/home")
                 );
 
         return http.build();
