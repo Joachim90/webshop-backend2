@@ -16,7 +16,6 @@ public class User {
     private String username;
     private String passwordHash;
 
-    @Column
     private List<String> roles = List.of("user", "admin");
 
     public User(String name, String encode, List<String> roles) {

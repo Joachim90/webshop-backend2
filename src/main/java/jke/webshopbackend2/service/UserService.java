@@ -24,15 +24,14 @@ public class UserService {
 
         final var user = userRepository.findByUsername(registerRequest.username());
 
-        if (user.isEmpty()) {
+        if (user.isPresent()) {
             return new ResponseEntity<>("Username is already in use", HttpStatus.BAD_REQUEST);
         }
 
         return ResponseEntity.ok().body(userRepository.save(
                 userRepository.save(new User(
                         registerRequest.username(),
-                        passwordEncoder.encode(registerRequest.rawPassword()),
-                        registerRequest.requestedRoles()
+                        passwordEncoder.encode(registerRequest.rawPassword())
                 ))
         ));
     }
