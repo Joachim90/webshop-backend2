@@ -19,7 +19,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/products")
+    @GetMapping("/home")
     public String showProducts(Model model) {
         List<Product> products = productService.getAllProducts();
 

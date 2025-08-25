@@ -54,7 +54,7 @@ public class UserController {
             session.setAttribute("user", user);
             redirectAttributes.addFlashAttribute("success", "Välkommen " + user.username() + "!");
             System.out.println("hej!");
-            return "home";
+            return "redirect:/home";
         }
 
         redirectAttributes.addFlashAttribute("error", "Fel användarnamn eller lösenord");
