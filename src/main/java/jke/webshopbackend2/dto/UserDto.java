@@ -1,5 +1,9 @@
 package jke.webshopbackend2.dto;
 
-public record UserDto(String name, String role) {
+import java.util.List;
 
+public record UserDto(
+        String username,
+        List<String> roles
+) {
 }

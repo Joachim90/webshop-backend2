@@ -1,8 +1,7 @@
 package jke.webshopbackend2.dto;
 
 public record LoginRequest(
-        String name,
+        String username,
         String rawPassword
 ) {
-
 }
