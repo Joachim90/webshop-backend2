@@ -29,9 +29,9 @@ public class UserController {
 
     @PostMapping("/register")
     public String register(@ModelAttribute RegisterRequest registerRequest, RedirectAttributes redirectAttributes, Model model) {
-        System.out.println(registerRequest);
         final var result = userService.register(registerRequest);
-        if (result.equals(ResponseEntity.ok().build())) {
+        System.out.println(result);
+        if (result.getStatusCode().is2xxSuccessful()) {
             redirectAttributes.addFlashAttribute("success", "Registered successfully");
             return "redirect:/login";
         } else {
@@ -50,7 +50,7 @@ public class UserController {
         ResponseEntity<?> response = userService.login(loginRequest);
 
         if (response.getStatusCode().is2xxSuccessful()) {
-            UserDto user = new UserDto(loginRequest.username(), userService.findUserByUsername(loginRequest.username()).getRoles());
+            UserDto user = new UserDto(loginRequest.username(), userService.findUserByUsername(loginRequest.username()).getRoles().stream().toList());
             session.setAttribute("user", user);
             redirectAttributes.addFlashAttribute("success", "Välkommen " + user.username() + "!");
             return "redirect:/start";
