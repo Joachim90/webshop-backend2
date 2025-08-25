@@ -1,5 +1,6 @@
 package jke.webshopbackend2.service;
 
+import jke.webshopbackend2.dto.UserDto;
 import jke.webshopbackend2.model.CustomerOrder;
 import jke.webshopbackend2.model.Product;
 import jke.webshopbackend2.model.User;

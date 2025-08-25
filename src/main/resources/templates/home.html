@@ -36,9 +36,13 @@
   <h2 th:text="${category.key}"></h2>
   <div class="product-row">
     <div class="product-card" th:each="product : ${category.value}">
-      <img th:src="${product.image}" alt="Produktbild">
-      <h3 th:text="${product.title}"></h3>
-      <p><b>Pris:</b> <span th:text="${product.price}"></span> SEK</p>
+      <form action="/purchase" method="post">
+        <img th:src="${product.image}" alt="Produktbild">
+        <h3 th:text="${product.title}"></h3>
+        <p><b>Pris:</b> <span th:text="${product.price}"></span> SEK</p>
+        <input type="hidden" name="productId" th:value="${product.id}" />
+        <button type="submit">Köp</button>
+      </form>
     </div>
   </div>
 </section>
