@@ -7,36 +7,30 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Asar&family=Bona+Nova+SC:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/styles.css">
-    <script src="/script/script.js" defer></script>
+    <script src="/static/script/script.js" defer></script>
 </head>
 <body>
 
 <h1>Produkter</h1>
 
-<section>
+<section th:if="${randomProduct != null}">
     <h2>Random produkt</h2>
-    <div class="product-card" th:if="${randomProduct != null}">
-        <img th:src="${randomProduct.image}" alt="Produktbild">
-        <h3 th:text="${randomProduct.title}"></h3>
-        <p><b>Pris:</b> <span th:text="${randomProduct.price}"></span> SEK</p>
-        <p><b>Kategori:</b> <span th:text="${randomProduct.category}"></span></p>
-        <p><b>Betyg:</b> <span th:text="${randomProduct.rating.rate}"></span>
-            ( <span th:text="${randomProduct.rating.count}"></span> röster )</p>
-        <p th:text="${randomProduct.description}"></p>
+    <div class="product-row">
+        <div class="product-card">
+            <img th:src="${randomProduct.image}" alt="Produktbild">
+            <h3 th:text="${randomProduct.title}"></h3>
+            <p><b>Pris:</b> <span th:text="${randomProduct.price}"></span> SEK</p>
+        </div>
     </div>
 </section>
 
 <section th:each="category : ${productsByCategory}">
-    <h2 th:text="'Kategori: ' + ${category.key}"></h2>
-    <div class="product-container">
+    <h2 th:text="${category.key}"></h2>
+    <div class="product-row">
         <div class="product-card" th:each="product : ${category.value}">
             <img th:src="${product.image}" alt="Produktbild">
             <h3 th:text="${product.title}"></h3>
             <p><b>Pris:</b> <span th:text="${product.price}"></span> SEK</p>
-            <p><b>Kategori:</b> <span th:text="${product.category}"></span></p>
-            <p><b>Betyg:</b> <span th:text="${product.rating.rate}"></span>
-                ( <span th:text="${product.rating.count}"></span> röster )</p>
-            <p th:text="${product.description}"></p>
         </div>
     </div>
 </section>
