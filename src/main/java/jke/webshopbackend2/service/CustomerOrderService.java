@@ -23,12 +23,26 @@ public class CustomerOrderService {
         return customerOrderRepository.findAll();
     }
 
-    //TODO: dto bör användas här, userToDto / dtoToUser metoder behövs
     public String purchaseProduct(Integer productId, User user) {
-        Product product = productRepository.findById(productId).get();
-        CustomerOrder customerOrder = new CustomerOrder(user, product);
-        customerOrderRepository.save(customerOrder);
-        return "success";
+        Product product = productRepository.findById(productId).orElse(null);
+
+        if (product != null) {
+            CustomerOrder customerOrder = new CustomerOrder(user, product);
+            customerOrderRepository.save(customerOrder);
+            return "success";
+        }
+
+        return "fail";
+    }
+
+    public String deleteOrder(int customerOrderId){
+        CustomerOrder customerOrder = customerOrderRepository.findById(customerOrderId).orElse(null);
+
+        if (customerOrder != null) {
+            customerOrderRepository.delete(customerOrder);
+            return "success";
+        }
+        return "fail";
     }
 
 }
