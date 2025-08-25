@@ -35,8 +35,6 @@ public class UserService {
                         registerRequest.requestedRoles()
                 ))
         ));
-
-
     }
 
     public ResponseEntity<?> login(LoginRequest loginRequest) {
@@ -46,6 +44,10 @@ public class UserService {
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+    }
+
+    public User findUserByUsername(String username) {
+        return userRepository.findByUsername(username).orElse(null);
     }
 
 }
