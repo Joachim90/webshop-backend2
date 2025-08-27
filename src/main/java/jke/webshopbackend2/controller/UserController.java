@@ -52,7 +52,7 @@ public class UserController {
         System.out.println("response: " + response);
         if (response.getStatusCode().is2xxSuccessful()) {
             session.setAttribute("user", response.getBody());
-            redirectAttributes.addFlashAttribute("success", "Välkommen "+response.getBody() + "!");
+            redirectAttributes.addFlashAttribute("success", "Välkommen " + ((User) session.getAttribute("user")).getUsername() + "!");
             System.out.println("hej! du är inloggad");
             return "redirect:/home";
         }
