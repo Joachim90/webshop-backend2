@@ -2,6 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <style>
+  table { border-collapse: collapse; margin-left: 20px; }
+  table td { border: 1px solid #aaa; padding: 5px 10px; }
+  </style>
   <title>Welcome</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,6 +23,38 @@
   <button class="close-notification">×</button>
 </div>
 
+
+<div>
+  <h1>Beställningar</h1>
+  <section>
+
+
+    <table>
+      <tr>
+        <th>Kund</th>
+        <th>Produkttitel</th>
+        <th>Pris</th>
+        <th>Åtgärd</th>
+      </tr>
+      <tr th:each="customerOrder : ${customerOrders}">
+        <td th:text="${customerOrder.customer != null ? customerOrder.customer.username : 'Ingen kund finns.'}"></td>
+        <td th:text="${customerOrder.product != null ? customerOrder.product.title : 'Ingen produkt finns.'}"></td>
+        <td th:text="${customerOrder.product != null ? customerOrder.product.price + '$' : 'Ingen produkt finns.'}"></td>
+        <td>
+          <form action="/delete-order" method="post">
+            <input type="hidden" name="customerOrderId" th:value="${customerOrder.id}" />
+            <button type="submit">Ta bort</button>
+          </form>
+        </td>
+      </tr>
+    </table>
+
+
+  </section>
+</div>
+
+
+
 <h1>Produkter</h1>
 
 <section th:if="${randomProduct != null}">
@@ -27,7 +63,7 @@
     <div class="product-card">
       <img th:src="${randomProduct.image}" alt="Produktbild">
       <h3 th:text="${randomProduct.title}"></h3>
-      <p><b>Pris:</b> <span th:text="${randomProduct.price}"></span> SEK</p>
+      <p><b>Pris:</b> <span th:text="${randomProduct.price}"></span>$</p>
     </div>
   </div>
 </section>
@@ -39,7 +75,7 @@
       <form action="/purchase" method="post">
         <img th:src="${product.image}" alt="Produktbild">
         <h3 th:text="${product.title}"></h3>
-        <p><b>Pris:</b> <span th:text="${product.price}"></span> SEK</p>
+        <p><b>Pris:</b> <span th:text="${product.price}"></span>$</p>
         <input type="hidden" name="productId" th:value="${product.id}" />
         <button type="submit">Köp</button>
       </form>
