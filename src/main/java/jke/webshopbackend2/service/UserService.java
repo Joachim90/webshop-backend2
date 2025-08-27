@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -22,18 +24,21 @@ public class UserService {
 
     public ResponseEntity<?> register(RegisterRequest registerRequest) {
 
-        final var user = userRepository.findByUsername(registerRequest.username());
-
-        if (user.isPresent()) {
+        final var existing = userRepository.findByUsername(registerRequest.username());
+        if (existing.isPresent()) {
             return new ResponseEntity<>("Username is already in use", HttpStatus.BAD_REQUEST);
         }
 
-        return ResponseEntity.ok().body(userRepository.save(
-                userRepository.save(new User(
-                        registerRequest.username(),
-                        passwordEncoder.encode(registerRequest.rawPassword())
-                ))
-        ));
+        User user = new User();
+        user.setUsername(registerRequest.username());
+        user.setPasswordHash(passwordEncoder.encode(registerRequest.rawPassword()));
+        if (registerRequest.requestedRoles() == null || registerRequest.requestedRoles().isEmpty()) {
+            user.setRoles(List.of("ROLE_USER"));
+        } else {
+            user.setRoles(registerRequest.requestedRoles());
+        }
+
+        return ResponseEntity.ok().body(userRepository.save(user));
     }
 
     public ResponseEntity<?> login(LoginRequest loginRequest) {

@@ -16,7 +16,7 @@ public class User {
     private String username;
     private String passwordHash;
 
-    private List<String> roles = List.of("user", "admin");
+    private List<String> roles = List.of("ROLE_USER", "ROLE_ADMIN");
 
     public User(String name, String encode, List<String> roles) {
         this.username = name;
@@ -45,6 +45,22 @@ public class User {
 
     public List<String> getRoles() {
         return roles;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 }
 
