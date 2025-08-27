@@ -25,6 +25,9 @@ public class CustomerOrderService {
     }
 
     public boolean purchaseProduct(Integer productId, User user) {
+        if (user == null) {
+            throw new NullPointerException("User is null");
+        }
         Product product = productRepository.findById(productId).orElse(null);
 
         if (product != null) {
