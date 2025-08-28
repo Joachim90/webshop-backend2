@@ -1,5 +1,7 @@
 package jke.webshopbackend2.controller;
 
+import jke.webshopbackend2.model.CustomerOrder;
+import jke.webshopbackend2.service.CustomerOrderService;
 import org.springframework.ui.Model;
 import jke.webshopbackend2.model.Product;
 import jke.webshopbackend2.service.ProductService;
@@ -14,13 +16,15 @@ import java.util.stream.Collectors;
 public class ProductController {
 
     final ProductService productService;
+    final CustomerOrderService customerOrderService;
 
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, CustomerOrderService customerOrderService) {
         this.productService = productService;
+        this.customerOrderService = customerOrderService;
     }
 
     @GetMapping("/home")
-    public String showProducts(Model model) {
+    public String showProductsAndOrders(Model model) {
         List<Product> products = productService.getAllProducts();
 
         Product randomProduct = products.isEmpty() ? null : products.get((int) (Math.random() * products.size()));
@@ -29,6 +33,9 @@ public class ProductController {
         Map<String, List<Product>> productsByCategory = products.stream()
                 .collect(Collectors.groupingBy(Product::getCategory));
         model.addAttribute("productsByCategory", productsByCategory);
+
+        List<CustomerOrder> customerOrders = customerOrderService.getAllCustomerOrders();
+        model.addAttribute("customerOrders", customerOrders);
 
         return "home";
     }
