@@ -2,12 +2,11 @@ package jke.webshopbackend2.model;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "user")
-public class User {
+public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,20 +15,26 @@ public class User {
     private String username;
     private String passwordHash;
 
-    private List<String> roles = List.of("ROLE_USER", "ROLE_ADMIN");
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "customer_roles",
+            joinColumns = @JoinColumn(name = "customer_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
 
-    public User(String name, String encode, List<String> roles) {
+    public Customer(String name, String encode, Set<Role> roles) {
         this.username = name;
         this.passwordHash = encode;
         this.roles = roles;
     }
 
-    public User(String name, String passwordHash) {
+    public Customer(String name, String passwordHash) {
         this.username = name;
         this.passwordHash = passwordHash;
     }
 
-    public User() {}
+    public Customer() {}
 
     public Long getId() {
         return id;
@@ -43,7 +48,7 @@ public class User {
         return passwordHash;
     }
 
-    public List<String> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
@@ -59,7 +64,7 @@ public class User {
         this.passwordHash = passwordHash;
     }
 
-    public void setRoles(List<String> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 }

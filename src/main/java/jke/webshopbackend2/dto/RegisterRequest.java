@@ -1,10 +1,12 @@
 package jke.webshopbackend2.dto;
 
-import java.util.List;
+import jke.webshopbackend2.model.Role;
+
+import java.util.Set;
 
 public record RegisterRequest(
         String username,
         String rawPassword,
-        List<String> requestedRoles
+        Set<String> requestedRoles
 ) {
 }

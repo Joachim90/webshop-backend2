@@ -1,12 +1,12 @@
 package jke.webshopbackend2.repository;
 
-import jke.webshopbackend2.model.User;
+import jke.webshopbackend2.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
-    Optional<User> findByUsername(String username);
+public interface CustomerRepository extends JpaRepository<Customer, Integer> {
+    Optional<Customer> findByUsername(String username);
 }

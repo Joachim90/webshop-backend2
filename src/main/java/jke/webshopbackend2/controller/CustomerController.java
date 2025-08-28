@@ -3,9 +3,8 @@ package jke.webshopbackend2.controller;
 import jakarta.servlet.http.HttpSession;
 import jke.webshopbackend2.dto.LoginRequest;
 import jke.webshopbackend2.dto.RegisterRequest;
-import jke.webshopbackend2.dto.UserDto;
-import jke.webshopbackend2.model.User;
-import jke.webshopbackend2.service.UserService;
+import jke.webshopbackend2.model.Customer;
+import jke.webshopbackend2.service.CustomerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,12 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-public class UserController {
+public class CustomerController {
 
-    final UserService userService;
+    final CustomerService customerService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
     }
 
     @GetMapping("/register")
@@ -30,7 +29,7 @@ public class UserController {
 
     @PostMapping("/register")
     public String register(@ModelAttribute RegisterRequest registerRequest, RedirectAttributes redirectAttributes, Model model) {
-        final var result = userService.register(registerRequest);
+        final var result = customerService.register(registerRequest);
         System.out.println(result);
         if (result.getStatusCode().is2xxSuccessful()) {
             redirectAttributes.addFlashAttribute("success", "Registered successfully");
@@ -48,11 +47,11 @@ public class UserController {
 
     @PostMapping("/login")
     public String loginUser(@ModelAttribute LoginRequest loginRequest, RedirectAttributes redirectAttributes, HttpSession session) {
-        ResponseEntity<?> response = userService.login(loginRequest);
+        ResponseEntity<?> response = customerService.login(loginRequest);
         System.out.println("response: " + response);
         if (response.getStatusCode().is2xxSuccessful()) {
             session.setAttribute("user", response.getBody());
-            redirectAttributes.addFlashAttribute("success", "Välkommen " + ((User) session.getAttribute("user")).getUsername() + "!");
+            redirectAttributes.addFlashAttribute("success", "Välkommen " + ((Customer) session.getAttribute("user")).getUsername() + "!");
             System.out.println("hej! du är inloggad");
             return "redirect:/home";
         }

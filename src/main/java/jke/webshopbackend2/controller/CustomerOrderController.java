@@ -1,7 +1,7 @@
 package jke.webshopbackend2.controller;
 
 import jakarta.servlet.http.HttpSession;
-import jke.webshopbackend2.model.User;
+import jke.webshopbackend2.model.Customer;
 import jke.webshopbackend2.service.CustomerOrderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,8 +23,8 @@ public class CustomerOrderController {
     @PostMapping("/purchase")
     public String purchaseProduct(@RequestParam("productId") int productId, HttpSession session, RedirectAttributes redirectAttributes, Model model) {
         System.out.println("här e vi");
-        User user = (User) session.getAttribute("user");
-        final var success = customerOrderService.purchaseProduct(productId, user);
+        Customer customer = (Customer) session.getAttribute("user");
+        final var success = customerOrderService.purchaseProduct(productId, customer);
 
         if (success) {
             redirectAttributes.addFlashAttribute("success", "Purchase successful");

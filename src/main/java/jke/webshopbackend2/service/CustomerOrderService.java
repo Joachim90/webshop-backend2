@@ -1,9 +1,8 @@
 package jke.webshopbackend2.service;
 
-import jke.webshopbackend2.dto.UserDto;
 import jke.webshopbackend2.model.CustomerOrder;
 import jke.webshopbackend2.model.Product;
-import jke.webshopbackend2.model.User;
+import jke.webshopbackend2.model.Customer;
 import jke.webshopbackend2.repository.CustomerOrderRepository;
 import jke.webshopbackend2.repository.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -24,14 +23,14 @@ public class CustomerOrderService {
         return customerOrderRepository.findAll();
     }
 
-    public boolean purchaseProduct(Integer productId, User user) {
-        if (user == null) {
+    public boolean purchaseProduct(Integer productId, Customer customer) {
+        if (customer == null) {
             throw new NullPointerException("User is null");
         }
         Product product = productRepository.findById(productId).orElse(null);
 
         if (product != null) {
-            customerOrderRepository.save(new CustomerOrder(user, product));
+            customerOrderRepository.save(new CustomerOrder(customer, product));
             return true;
         }
 

@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 
 @Entity
 public class CustomerOrder {
-    public CustomerOrder(User customer, Product product) {
+    public CustomerOrder(Customer customer, Product product) {
         this.customer = customer;
         this.product = product;
     }
@@ -15,7 +15,7 @@ public class CustomerOrder {
     public int id;
 
     @ManyToOne
-    private User customer;
+    private Customer customer;
 
     @ManyToOne
     private Product product;
@@ -32,11 +32,11 @@ public class CustomerOrder {
         this.id = id;
     }
 
-    public User getCustomer() {
+    public Customer getCustomer() {
         return customer;
     }
 
-    public void setCustomer(User customer) {
+    public void setCustomer(Customer customer) {
         this.customer = customer;
     }
 
