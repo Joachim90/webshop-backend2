@@ -1,17 +1,16 @@
 package jke.webshopbackend2.controller;
 
-import jakarta.servlet.http.HttpSession;
+
 import jke.webshopbackend2.model.Customer;
+import jke.webshopbackend2.security.ConcreteUserDetails;
 import jke.webshopbackend2.service.CustomerOrderService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
 
 @Controller
 public class CustomerOrderController {
@@ -25,15 +24,21 @@ public class CustomerOrderController {
 
 
     @PostMapping("/purchase")
-    public String purchaseProduct(@RequestParam("productId") int productId, HttpSession session, RedirectAttributes redirectAttributes, Model model) {
-        Customer customer = (Customer) session.getAttribute("user");
-        final var success = customerOrderService.purchaseProduct(productId, customer);
+    public String purchaseProduct(@RequestParam("productId") int productId,
+                                  RedirectAttributes redirectAttributes) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        ConcreteUserDetails userDetails = (ConcreteUserDetails) auth.getPrincipal();
+        Customer customer = userDetails.getCustomer();
+
+        boolean success = customerOrderService.purchaseProduct(productId, customer);
 
         if (success) {
             redirectAttributes.addFlashAttribute("success", "Köpet lyckades!");
         } else {
             redirectAttributes.addFlashAttribute("error", "Något gick fel, köpet kunde inte genomföras.");
         }
+
         return "redirect:/home";
     }
 

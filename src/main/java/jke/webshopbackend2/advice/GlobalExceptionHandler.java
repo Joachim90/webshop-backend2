@@ -8,7 +8,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NullPointerException.class)
     public String handleNullPointerException(NullPointerException e) {
-        
+
         return "redirect:/login";
     }
 }
