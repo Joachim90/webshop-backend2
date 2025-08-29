@@ -34,7 +34,7 @@
 </div>
 
 
-<div sec:authorize="hasRole('Admin')">
+<div sec:authorize="hasAuthority('ROLE_ADMIN')">
     <h1>Beställningar</h1>
     <section>
 
@@ -64,7 +64,7 @@
 </div>
 
 
-<div sec:authorize="hasRole('Customer')">
+<div sec:authorize="hasAuthority('ROLE_CUSTOMER')">
     <h1>Produkter</h1>
 
     <section th:if="${randomProduct != null}">

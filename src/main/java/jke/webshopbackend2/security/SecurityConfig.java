@@ -69,9 +69,9 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/login")
                         .usernameParameter("username")
-                        .passwordParameter("rawPassword")
+                        .passwordParameter("password")
                         .defaultSuccessUrl("/home", true)
-                        //.failureUrl("/login?error=true")
+                        .failureUrl("/login?error=true")
                         .permitAll()
                 )
                 .csrf(AbstractHttpConfigurer::disable);
@@ -79,7 +79,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
+   /* @Bean
     public UserDetailsService userDetailsService(CustomerRepository customerRepository) {
         return username -> customerRepository.findByUsername(username)
                 .map(customer -> User.builder()
@@ -93,7 +93,7 @@ public class SecurityConfig {
                         .build()
                 )
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
-    }
+    }*/
 
 
 }

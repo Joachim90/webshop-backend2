@@ -45,7 +45,7 @@ public class CustomerController {
         return "login";
     }
 
-    @PostMapping("/login")
+    /*@PostMapping("/login")
     public String loginUser(@ModelAttribute LoginRequest loginRequest, RedirectAttributes redirectAttributes, HttpSession session) {
         ResponseEntity<?> response = customerService.login(loginRequest);
         System.out.println("response: " + response);
@@ -58,5 +58,5 @@ public class CustomerController {
 
         redirectAttributes.addFlashAttribute("error", "Fel användarnamn eller lösenord");
         return "redirect:/login";
-    }
+    }*/
 }

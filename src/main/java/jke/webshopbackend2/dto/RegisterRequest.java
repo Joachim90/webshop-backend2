@@ -6,7 +6,7 @@ import java.util.Set;
 
 public record RegisterRequest(
         String username,
-        String rawPassword,
+        String password,
         Set<String> requestedRoles
 ) {
 }

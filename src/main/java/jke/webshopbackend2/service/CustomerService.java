@@ -36,7 +36,7 @@ public class CustomerService {
 
         Customer customer = new Customer();
         customer.setUsername(registerRequest.username());
-        customer.setPasswordHash(passwordEncoder.encode(registerRequest.rawPassword()));
+        customer.setPasswordHash(passwordEncoder.encode(registerRequest.password()));
         if (registerRequest.requestedRoles() == null || registerRequest.requestedRoles().isEmpty()) {
             customer.setRoles(Set.of(roleRepository.findByName("ROLE_USER")));
         } else {
@@ -52,7 +52,7 @@ public class CustomerService {
 
     public ResponseEntity<?> login(LoginRequest loginRequest) {
         final var user = customerRepository.findByUsername(loginRequest.username());
-        if (user.isPresent() && passwordEncoder.matches(loginRequest.rawPassword(), user.get().getPasswordHash())) {
+        if (user.isPresent() && passwordEncoder.matches(loginRequest.password(), user.get().getPasswordHash())) {
             return ResponseEntity.ok().body(user.get());
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
