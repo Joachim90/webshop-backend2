@@ -71,9 +71,13 @@
         <h2>Random produkt</h2>
         <div class="product-row">
             <div class="product-card">
-                <img th:src="${randomProduct.image}" alt="Produktbild">
-                <h3 th:text="${randomProduct.title}"></h3>
-                <p><b>Pris:</b> <span th:text="${randomProduct.price}"></span>$</p>
+                <form action="/purchase" method="post">
+                    <img th:src="${randomProduct.image}" alt="Produktbild">
+                    <h3 th:text="${randomProduct.title}"></h3>
+                    <p><b>Pris:</b> <span th:text="${randomProduct.price}"></span>$</p>
+                    <input type="hidden" name="productId" th:value="${randomProduct.id}"/>
+                    <button type="submit">Köp</button>
+                </form>
             </div>
         </div>
     </section>
