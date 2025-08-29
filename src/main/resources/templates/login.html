@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
@@ -22,7 +24,7 @@
 <div class="start-page">
     <div class="background-container">
         <div class="login-container">
-            <form action="/login" method="post">
+            <form th:action="@{/login}" method="post">
                 <input type="text" name="username" placeholder="Användarnamn" />
                 <input type="password" name="rawPassword" placeholder="Lösenord" />
                 <button type="submit">Logga in</button>

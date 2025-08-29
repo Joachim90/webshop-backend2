@@ -10,8 +10,9 @@
     --pale-sand-rgba: rgb(220, 210, 190, 0.6);
     --mist-grey: rgb(190, 190, 180);
 
-    --background-no-text: url("https://i.imgur.com/6MbOryH.jpeg");
-    --background-text: url("https://i.imgur.com/n6spGXV.jpeg");
+
+    --background-no-text: url("https://philipp-frank.com/wp-content/uploads/2022/10/Philipp-Frank_Funky_Funghy_30.jpg");
+    --background-text: url("https://philipp-frank.com/wp-content/uploads/2022/10/Philipp-Frank_Funky_Funghy_30.jpg");
 }
 
 .product-row {
