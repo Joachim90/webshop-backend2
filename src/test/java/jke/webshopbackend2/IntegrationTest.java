@@ -1,12 +1,11 @@
-package jke.webshopbackend2.model;
+package jke.webshopbackend2;
 
+import jke.webshopbackend2.model.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.web.client.RestTemplate;
-
 import java.util.Arrays;
 import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class IntegrationTest {
