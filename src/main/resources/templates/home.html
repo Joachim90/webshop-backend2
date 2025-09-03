@@ -32,6 +32,8 @@
     <span th:text="${success}"></span>
     <button class="close-notification">×</button>
 </div>
+<p th:text="${#authentication.name}"></p>
+<p th:text="${#authentication.authorities}"></p>
 
 
 <div sec:authorize="hasAuthority('ROLE_ADMIN')">
@@ -76,6 +78,7 @@
                     <h3 th:text="${randomProduct.title}"></h3>
                     <p><b>Pris:</b> <span th:text="${randomProduct.price}"></span>$</p>
                     <input type="hidden" name="productId" th:value="${randomProduct.id}"/>
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                     <button type="submit">Köp</button>
                 </form>
             </div>
@@ -91,7 +94,9 @@
                     <h3 th:text="${product.title}"></h3>
                     <p><b>Pris:</b> <span th:text="${product.price}"></span>$</p>
                     <input type="hidden" name="productId" th:value="${product.id}"/>
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                     <button type="submit">Köp</button>
+                    <p th:text="${_csrf.token}"></p>
                 </form>
             </div>
         </div>

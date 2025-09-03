@@ -10,16 +10,24 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
 
+    OAuth2Service oAuth2Service;
+
+    public SecurityConfig(OAuth2Service oAuth2Service) {
+        this.oAuth2Service = oAuth2Service;
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -27,10 +35,16 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/css/**", "/script/**").permitAll()
                         .requestMatchers("/register", "/login").permitAll()
+                        .requestMatchers("/oauth2/**").permitAll()
                         .requestMatchers("/home").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/delete-order").hasRole("ADMIN")
                         .requestMatchers("/purchase").hasRole("USER")
                         .anyRequest().authenticated()
+                )
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/home")
+                        .userInfoEndpoint(user -> user.userService(oAuth2Service.oauth2UserService()))
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
@@ -40,7 +54,8 @@ public class SecurityConfig {
                         .failureUrl("/login?error=true")
                         .permitAll()
                 )
-                .csrf(AbstractHttpConfigurer::disable);
+                //.csrf(AbstractHttpConfigurer::disable)
+        ;
 
         return http.build();
     }

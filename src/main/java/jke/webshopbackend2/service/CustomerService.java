@@ -62,5 +62,4 @@ public class CustomerService {
     public Customer findUserByUsername(String username) {
         return customerRepository.findByUsername(username).orElse(null);
     }
-
 }
