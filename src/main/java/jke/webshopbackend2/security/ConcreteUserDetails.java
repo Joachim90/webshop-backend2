@@ -5,15 +5,23 @@ import jke.webshopbackend2.model.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
-public class ConcreteUserDetails implements UserDetails {
+public class ConcreteUserDetails implements UserDetails, OAuth2User {
     private final Customer customer;
+    private final Map<String, Object> attributes;
 
     public ConcreteUserDetails(Customer customer) {
+        this(customer, Map.of());
+    }
+
+    public ConcreteUserDetails(Customer customer, Map<String, Object> attributes) {
         this.customer = customer;
+        this.attributes = attributes != null ? attributes : Map.of();
     }
 
     @Override
@@ -60,5 +68,14 @@ public class ConcreteUserDetails implements UserDetails {
         return true;
     }
 
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
 
+    @Override
+    public String getName() {
+        // For OAuth2, "name" is often the username or id.
+        return customer.getUsername();
+    }
 }

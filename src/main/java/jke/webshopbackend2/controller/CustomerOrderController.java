@@ -27,28 +27,13 @@ public class CustomerOrderController {
         this.customerService = customerService;
     }
 
-
-
     @PostMapping("/purchase")
     public String purchaseProduct(@RequestParam("productId") int productId,
                                   RedirectAttributes redirectAttributes) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Object principal = auth.getPrincipal();
-        Customer customer;
-
-        if (principal instanceof ConcreteUserDetails userDetails) {
-            customer = userDetails.getCustomer();
-        } else if (principal instanceof DefaultOAuth2User oauth2User) {
-            String username = oauth2User.getAttribute("login");
-            customer = customerService.findUserByUsername(GITHUB_USER_PREFIX + username);
-            if (customer == null) {
-                redirectAttributes.addFlashAttribute("message", "Customer not found");
-                return "redirect:/login";
-            }
-        } else {
-            throw new IllegalStateException("Unknown principal type: " + principal.getClass());
-        }
+        ConcreteUserDetails userDetails = (ConcreteUserDetails) auth.getPrincipal();
+        Customer customer = userDetails.getCustomer();
 
         boolean success = customerOrderService.purchaseProduct(productId, customer);
 
@@ -74,15 +59,4 @@ public class CustomerOrderController {
         return "redirect:/home";
     }
 
-/*    @ModelAttribute("customerOrders")
-    public List<CustomerOrder> allOrders(Model model) {
-        List<CustomerOrder> customerOrders = customerOrderService.getAllCustomerOrders();
-        model.addAttribute("customerOrders", customerOrders);
-
-        if (customerOrders.isEmpty()){
-            model.addAttribute("error", "Inga beställningar finns.");
-        }
-        System.out.println("Customer orders: " + customerOrders.size());
-        return customerOrders;
-    }*/
 }

@@ -73,5 +73,13 @@ public class Customer {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    public void addRole(Role role) {
+        this.roles.add(role);
+    }
+
+    public void addRole(String role) {
+        this.roles.add(new Role(role));
+    }
 }
 
