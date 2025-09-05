@@ -1,6 +1,8 @@
 package jke.webshopbackend2.model;
 
 import jakarta.persistence.*;
+import jke.webshopbackend2.security.OAuth2Service;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -32,6 +34,10 @@ public class Customer {
     public Customer(String name, String passwordHash) {
         this.username = name;
         this.passwordHash = passwordHash;
+    }
+
+    public Customer(String name) {
+        this.username = name;
     }
 
     public Customer() {}

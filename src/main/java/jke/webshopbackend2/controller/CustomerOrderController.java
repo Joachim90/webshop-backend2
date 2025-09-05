@@ -4,21 +4,27 @@ package jke.webshopbackend2.controller;
 import jke.webshopbackend2.model.Customer;
 import jke.webshopbackend2.security.ConcreteUserDetails;
 import jke.webshopbackend2.service.CustomerOrderService;
+import jke.webshopbackend2.service.CustomerService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import static jke.webshopbackend2.security.OAuth2Service.GITHUB_USER_PREFIX;
+
 @Controller
 public class CustomerOrderController {
 
     final CustomerOrderService customerOrderService;
+    private final CustomerService customerService;
 
-    public CustomerOrderController(CustomerOrderService customerOrderService) {
+    public CustomerOrderController(CustomerOrderService customerOrderService, CustomerService customerService) {
         this.customerOrderService = customerOrderService;
+        this.customerService = customerService;
     }
 
 
@@ -28,8 +34,21 @@ public class CustomerOrderController {
                                   RedirectAttributes redirectAttributes) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        ConcreteUserDetails userDetails = (ConcreteUserDetails) auth.getPrincipal();
-        Customer customer = userDetails.getCustomer();
+        Object principal = auth.getPrincipal();
+        Customer customer;
+
+        if (principal instanceof ConcreteUserDetails userDetails) {
+            customer = userDetails.getCustomer();
+        } else if (principal instanceof DefaultOAuth2User oauth2User) {
+            String username = oauth2User.getAttribute("login");
+            customer = customerService.findUserByUsername(GITHUB_USER_PREFIX + username);
+            if (customer == null) {
+                redirectAttributes.addFlashAttribute("message", "Customer not found");
+                return "redirect:/login";
+            }
+        } else {
+            throw new IllegalStateException("Unknown principal type: " + principal.getClass());
+        }
 
         boolean success = customerOrderService.purchaseProduct(productId, customer);
 

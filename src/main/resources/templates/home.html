@@ -55,6 +55,7 @@
                 <td>
                     <form action="/delete-order" method="post">
                         <input type="hidden" name="customerOrderId" th:value="${customerOrder.id}"/>
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                         <button type="submit">Ta bort</button>
                     </form>
                 </td>
