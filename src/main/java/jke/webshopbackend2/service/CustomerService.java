@@ -29,9 +29,13 @@ public class CustomerService {
 
     public ResponseEntity<?> register(RegisterRequest registerRequest) {
 
+        if (registerRequest.username().startsWith("GITHUB:")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Illegal username");
+        }
+
         final var existing = customerRepository.findByUsername(registerRequest.username());
         if (existing.isPresent()) {
-            return new ResponseEntity<>("Username is already in use", HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username is already in use");
         }
 
         Customer customer = new Customer();

@@ -28,10 +28,10 @@ public class CustomerController {
         final var result = customerService.register(registerRequest);
         System.out.println(result);
         if (result.getStatusCode().is2xxSuccessful()) {
-            redirectAttributes.addFlashAttribute("success", "Registered successfully");
+            redirectAttributes.addFlashAttribute("success", "Registered Successfully");
             return "redirect:/login";
         } else {
-            model.addAttribute("error", "Something went wrong");
+            model.addAttribute("error", result.getBody());
             return "register";
         }
     }
