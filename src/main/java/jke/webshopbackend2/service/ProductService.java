@@ -1,6 +1,7 @@
 package jke.webshopbackend2.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.transaction.Transactional;
 import jke.webshopbackend2.model.Product;
 import jke.webshopbackend2.repository.ProductRepository;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -20,11 +21,12 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
+    @Transactional
     @Scheduled(fixedRate = 5 * 60 * 1000) // Hämtar från API var 5e minut [minuter * sekunder * millisekunder]
     public void fetchProducts() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        URL url = new URL("https://fakestoreapi.com/products/1");
-        //URL url = new URL("https://fakestoreapi.com/products");
+        //URL url = new URL("https://fakestoreapi.com/products/1");
+        URL url = new URL("https://fakestoreapi.com/products");
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
         con.connect();
@@ -34,14 +36,15 @@ public class ProductService {
         for (Product product : existing) {
             product.setActive(false);
         }
-        productRepository.saveAll(existing);
 
         try(InputStream in = con.getInputStream()) {
-            //Product[] products = mapper.readValue(in, Product[].class);
-            //productRepository.saveAll(Arrays.asList(products));
+            productRepository.saveAll(existing);
 
-            Product product = mapper.readValue(in, Product.class);
-            productRepository.save(product);
+            Product[] products = mapper.readValue(in, Product[].class);
+            productRepository.saveAll(Arrays.asList(products));
+
+            //Product product = mapper.readValue(in, Product.class);
+            //productRepository.save(product);
 
             System.out.println("Products fetched successfully");
         }
