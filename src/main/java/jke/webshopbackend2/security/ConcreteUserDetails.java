@@ -6,7 +6,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
@@ -75,7 +74,6 @@ public class ConcreteUserDetails implements UserDetails, OAuth2User {
 
     @Override
     public String getName() {
-        // For OAuth2, "name" is often the username or id.
         return customer.getUsername();
     }
 }

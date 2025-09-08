@@ -1,6 +1,5 @@
 package jke.webshopbackend2.service;
 
-
 import jke.webshopbackend2.dto.RegisterRequest;
 import jke.webshopbackend2.model.Customer;
 import jke.webshopbackend2.model.Role;
@@ -10,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.Set;
 import java.util.stream.Collectors;
 
