@@ -13,8 +13,8 @@
 
 </head>
 <body>
-<div class="notification-popup error" th:if="${error}">
-    <span th:text="${error}"></span>
+<div class="notification-popup error" th:if="${param.error}">
+    <span>Felaktigt användarnamn eller lösenord. Försök igen!</span>
     <button class="close-notification">×</button>
 </div>
 <div class="notification-popup success" th:if="${success}">

@@ -54,7 +54,7 @@ public class CustomerService {
         return ResponseEntity.ok().body(customerRepository.save(customer));
     }
 
-    public ResponseEntity<?> login(LoginRequest loginRequest) {
+    /*public ResponseEntity<?> login(LoginRequest loginRequest) {
         final var user = customerRepository.findByUsername(loginRequest.username());
         if (user.isPresent() && passwordEncoder.matches(loginRequest.password(), user.get().getPasswordHash())) {
             return ResponseEntity.ok().body(user.get());
@@ -65,5 +65,5 @@ public class CustomerService {
 
     public Customer findUserByUsername(String username) {
         return customerRepository.findByUsername(username).orElse(null);
-    }
+    }*/
 }
