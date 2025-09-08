@@ -20,11 +20,9 @@ import static jke.webshopbackend2.security.OAuth2Service.GITHUB_USER_PREFIX;
 public class CustomerOrderController {
 
     final CustomerOrderService customerOrderService;
-    private final CustomerService customerService;
 
-    public CustomerOrderController(CustomerOrderService customerOrderService, CustomerService customerService) {
+    public CustomerOrderController(CustomerOrderService customerOrderService) {
         this.customerOrderService = customerOrderService;
-        this.customerService = customerService;
     }
 
     @PostMapping("/purchase")

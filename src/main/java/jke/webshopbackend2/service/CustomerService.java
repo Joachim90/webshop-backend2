@@ -1,6 +1,6 @@
 package jke.webshopbackend2.service;
 
-import jke.webshopbackend2.dto.LoginRequest;
+
 import jke.webshopbackend2.dto.RegisterRequest;
 import jke.webshopbackend2.model.Customer;
 import jke.webshopbackend2.model.Role;
@@ -30,12 +30,12 @@ public class CustomerService {
     public ResponseEntity<?> register(RegisterRequest registerRequest) {
 
         if (registerRequest.username().startsWith("GITHUB:")) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Illegal username");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Ogiltigt användarnamn.");
         }
 
         final var existing = customerRepository.findByUsername(registerRequest.username());
         if (existing.isPresent()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username is already in use");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Användarnamnet är upptaget.");
         }
 
         Customer customer = new Customer();
@@ -54,16 +54,4 @@ public class CustomerService {
         return ResponseEntity.ok().body(customerRepository.save(customer));
     }
 
-    /*public ResponseEntity<?> login(LoginRequest loginRequest) {
-        final var user = customerRepository.findByUsername(loginRequest.username());
-        if (user.isPresent() && passwordEncoder.matches(loginRequest.password(), user.get().getPasswordHash())) {
-            return ResponseEntity.ok().body(user.get());
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-    }
-
-    public Customer findUserByUsername(String username) {
-        return customerRepository.findByUsername(username).orElse(null);
-    }*/
 }
