@@ -28,7 +28,7 @@ public class ProductController {
     @GetMapping("/home")
     public String showProductsAndOrders(Model model) {
 
-        List<Product> products = productService.getAllProducts();
+        List<Product> products = productService.getAllProducts().stream().filter(Product::isActive).toList();
 
         Product randomProduct = products.isEmpty() ? null : products.get((int) (Math.random() * products.size()));
         model.addAttribute("randomProduct", randomProduct);

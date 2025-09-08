@@ -19,6 +19,8 @@ public class Product {
     @Embedded
     private Rating rating;
 
+    private boolean isActive = true;
+
     public Product() {
     }
 
@@ -35,6 +37,14 @@ public class Product {
 
     public int getId() {
         return id;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     public void setId(int id) {
