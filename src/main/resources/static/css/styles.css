@@ -28,6 +28,12 @@
     width: 150px;
     text-align: center;
 }
+.product-card img{
+    width: 150px;
+}
+.product-token{
+    font-size: 4px;
+}
 
 body, html {
     height: 100%;

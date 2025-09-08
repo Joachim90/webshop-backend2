@@ -97,7 +97,7 @@
                     <input type="hidden" name="productId" th:value="${product.id}"/>
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                     <button type="submit">Köp</button>
-                    <p th:text="${_csrf.token}"></p>
+                    <p class="product-token" th:text="${_csrf.token}"></p>
                 </form>
             </div>
         </div>
